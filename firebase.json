@@ -1,0 +1,97 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": [
+    {
+      "source": "backend",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "/web/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/getModel",
+        "function": "getModel"
+      },
+      {
+        "source": "/api/addTable",
+        "function": "addTable"
+      },
+      {
+        "source": "/api/addField",
+        "function": "addField"
+      },
+      {
+        "source": "/api/deleteField",
+        "function": "deleteField"
+      },
+      {
+        "source": "/api/deleteTable",
+        "function": "deleteTable"
+      },
+      {
+        "source": "/api/createRecord",
+        "function": "createRecord"
+      },
+      {
+        "source": "/api/deleteRecord",
+        "function": "deleteRecord"
+      },
+      {
+        "source": "/api/updateRecordField",
+        "function": "updateRecordField"
+      },
+      {
+        "source": "/api/queryRecords",
+        "function": "queryRecords"
+      },
+      {
+        "source": "/api/aggregateRecords",
+        "function": "aggregateRecords"
+      },
+      {
+        "source": "/api/createInstructions",
+        "function": "createInstructions"
+      },
+      {
+        "source": "/api/deleteInstructions",
+        "function": "deleteInstructions"
+      },
+      {
+        "source": "/oauth/token",
+        "function": "oAuthToken"
+      },
+      {
+        "source": "/oauth/grant",
+        "function": "oAuthGrant"
+      },
+      {
+        "source": "/oauth/authorization",
+        "function": "oAuthAuthorization"
+      },
+      {
+        "source": "/auth/autologin",
+        "function": "authAutoLogIn"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

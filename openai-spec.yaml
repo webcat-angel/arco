@@ -1,0 +1,355 @@
+openapi: 3.1.0
+info:
+  title: GPT Database API
+  description: API to retrieve the model of the user database and create new tables.
+  version: 1.0.0
+servers:
+  - url: https://db.arco.tools
+    description: Main (production) server
+paths:
+  /api/getModel:
+    get:
+      operationId: getModel
+      summary: Retrieves the model and instructions of the user database.
+      description: Returns the structure of the user database model with tables, fields, and their types. Also includes any instructions for the model.
+      responses:
+        "200":
+          description: Model and instructions retrieved successfully
+  /api/addTable:
+    post:
+      operationId: addTable
+      summary: Creates a new table in the database.
+      description: Takes a unique table ID and description to create a new table in the user database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tableId
+                - description
+              properties:
+                tableId:
+                  type: string
+                description:
+                  type: string
+      responses:
+        "201":
+          description: Table created successfully
+  /api/addField:
+    post:
+      operationId: addField
+      summary: Adds a new field to an existing table in the database.
+      description: Takes a table ID, field name, and field type to add a new field to an existing table in the user database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fields
+              properties:
+                fields:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - tableId
+                      - fieldName
+                      - fieldType
+                    properties:
+                      tableId:
+                        type: string
+                      fieldName:
+                        type: string
+                      fieldType:
+                        type: string
+                        description: The type of the field to be added to the table schema. Supported types include string, number, boolean, and date (ISO 8601 format).
+                        enum:
+                          - string
+                          - number
+                          - boolean
+                          - date
+                      fieldDefault:
+                        type: [string, number, boolean]
+                        description: The default value of the field to be added to the table schema. Optional.
+      responses:
+        "200":
+          description: Field added successfully
+  /api/deleteField:
+    post:
+      operationId: deleteField
+      summary: Deletes a field from an existing table in the database.
+      description: Takes a table ID and field name to delete a field from an existing table in the user database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tableId
+                - fieldName
+              properties:
+                tableId:
+                  type: string
+                fieldName:
+                  type: string
+      responses:
+        "200":
+          description: Field deleted successfully
+  /api/deleteTable:
+    post:
+      operationId: deleteTable
+      summary: Deletes a table from the database.
+      description: Takes a table ID to delete a table from the user database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tableId
+              properties:
+                tableId:
+                  type: string
+      responses:
+        "200":
+          description: Table deleted successfully
+  /api/createRecord:
+    post:
+      operationId: createRecord
+      summary: Creates a new record in a table.
+      description: Takes a table ID to create a new record in the specified table.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - records
+              properties:
+                records:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - tableId
+                      - data
+                    properties:
+                      tableId:
+                        type: string
+                      fields:
+                        type: array
+                        description: The fields and values of the record to be created based on the table schema from the table ID.
+                        items:
+                          type: object
+                          properties:
+                            field:
+                              type: string
+                            value:
+                              type: [string, number, boolean]
+                
+      responses:
+        "200":
+          description: Record created successfully
+  /api/updateRecordField:
+    post:
+      operationId: updateRecordField
+      summary: Updates the value of a field in a record.
+      description: Takes a table ID, record ID, field name, and new value to update the value of a field in a record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - updates
+              properties:
+                updates:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - tableId
+                      - recordId
+                      - fieldName
+                      - value
+                    properties:
+                      tableId:
+                        type: string
+                      recordId:
+                        type: string
+                      fieldName:
+                        type: string
+                      value:
+                        type: [string, number, boolean]
+      responses:
+        "200":
+          description: Field updated successfully
+  /api/deleteRecord:
+    post:
+      operationId: deleteRecord
+      summary: Deletes a record from a table.
+      description: Takes a table ID and record ID to delete a record from the specified table.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - deletions
+              properties:
+                deletions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - tableId
+                      - recordId
+                    properties:
+                      tableId:
+                        type: string
+                      recordId:
+                        type: string
+      responses:
+        "200":
+          description: Record deleted successfully
+  /api/queryRecords:
+    post:
+      operationId: queryRecords
+      summary: Queries records from a table based on conditions.
+      description: Takes a table ID and a query object to retrieve records from the specified table based on conditions.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tableId
+              properties:
+                tableId:
+                  type: string
+      responses:
+        "200":
+          description: Records retrieved successfully
+  /api/aggregateRecords:
+    post:
+      operationId: aggregateRecords
+      summary: Aggregates records from a table based on conditions.
+      description: Takes a table ID and an aggregation object to aggregate records from the specified table based on conditions.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - aggregations
+              properties:
+                aggregations:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - tableId
+                      - filters
+                      - groupBy
+                      - aggregationField
+                      - aggregationFunction
+                    properties:
+                      tableId:
+                        type: string
+                      groupBy:
+                        type: string
+                      filters:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            field:
+                              type: string
+                            operator:
+                              type: string
+                              enum:
+                                - ==
+                                - "!="
+                                - ">"
+                                - "<"
+                                - ">="
+                                - "<="
+                            value:
+                              type: [string, number, boolean]
+                      aggregationField:
+                        type: string
+                      aggregationFunction:
+                        type: string
+                        enum:
+                          - sum
+                          - mean
+                          - min
+                          - max
+                          - count
+      responses:
+        "200":
+          description: Records aggregated successfully
+  /api/createInstructions:
+    post:
+      operationId: createInstructions
+      summary: Creates instructions for the model based on tables.
+      description: Takes a list of table IDs and an instruction to create an instruction for the model in relation to the specified tables.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - instructions
+              properties:
+                instructions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - tableIds
+                      - instruction
+                    properties:
+                      tableIds:
+                        type: array
+                        items:
+                          type: string
+                      instruction:
+                        type: string
+      responses:
+        "200":
+          description: Instructions created successfully
+  /api/deleteInstructions:
+    post:
+      operationId: deleteInstructions
+      summary: Deletes instructions for the model.
+      description: Takes a list of instruction IDs to delete instructions for the model.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - deletions
+              properties:
+                deletions:
+                  type: array
+                  description: List of instruction IDs to be deleted.
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Instructions deleted successfully

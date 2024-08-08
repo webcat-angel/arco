@@ -1,0 +1,49 @@
+<div id="paypal-button-container-P-85E50709JC6164334M2GHHZQ"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=AaHzETltA04ByUgx3q1zpikwKJ7W5hhloI1694cAH0Pe2o9EItszNhSMG5qI4bB9D5QmSLE1wI1FnWHs&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-85E50709JC6164334M2GHHZQ'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-85E50709JC6164334M2GHHZQ'); // Renders the PayPal button
+</script>
+
+<a href="https://www.mercadopago.com.co/subscriptions/checkout?preapproval_plan_id=2c9380849007284d0190487de98910b2" name="MP-payButton" class='blue-ar-l-rn-none'>Suscribirme</a>
+<script type="text/javascript">
+   (function() {
+      function $MPC_load() {
+        window.$MPC_loaded !== true && (function() {
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.async = true;
+          s.src = document.location.protocol + "//secure.mlstatic.com/mptools/render.js";
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
+          window.$MPC_loaded = true;
+        })();
+      }
+      window.$MPC_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;
+   })();
+  // to receive event with message when closing modal from congrants back to site
+  function $MPC_message(event) {
+    // onclose modal ->CALLBACK FUNCTION
+    // !!!!!!!!FUNCTION_CALLBACK HERE Received message: {event.data} preapproval_id !!!!!!!!
+  }
+  window.$MPC_loaded !== true ? (window.addEventListener("message", $MPC_message)) : null;
+</script>
+
+
+
+mailto:academia@danielangel.co?subject=URGENTE%3A%20Ayuda%20con%20suscripci%C3%B3n&body=Hola!%0D%0A%0D%0ATengo%20problemas%20con%20la%20activaci%C3%B3n%20de%20mi%20suscripci%C3%B3n%20asociada%20al%20correo%20{{$auth.email}}.%0D%0A%0D%0AAgradezco%20la%20ayuda%20para%20activar%20mi%20cuenta.%0D%0A%0D%0AGracias.%0D%0A%0D%0A{{user.name}}
