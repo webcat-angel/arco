@@ -12,13 +12,13 @@ export default onRequest(async (request, response) => {
         <body>
             <script type="module">
                 // Import the functions you need from the SDKs you need
-                import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js';
-                import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js';
+                import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+                import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
 
                 // Your web app's Firebase configuration
                 const firebaseConfig = {
                     apiKey: "AIzaSyCfkOmEtDzc1VFmaielw39qzyx-0s02-mE",
-                    authDomain: "gpt-database-8478b.firebaseapp.com",
+                    authDomain: "db.arco.tools",
                     projectId: "gpt-database-8478b",
                     storageBucket: "gpt-database-8478b.appspot.com",
                     messagingSenderId: "505114027434",
